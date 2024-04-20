@@ -1,6 +1,7 @@
 package com.example.clearlingo.feature_lingo.data.repository
 
-import com.example.clearlingo.feature_lingo.core.util.Resource
+import android.util.Log
+import com.example.clearlingo.core.util.Resource
 import com.example.clearlingo.feature_lingo.data.local.WordInfoDao
 import com.example.clearlingo.feature_lingo.data.remote.DictionaryApi
 import com.example.clearlingo.feature_lingo.domain.repository.WordInfoRepository
@@ -15,6 +16,9 @@ class WordInfoRepositoryImpl(
     private val dao: WordInfoDao
 ): WordInfoRepository {
 
+    companion object {
+        private const val TAG = "WordInfoRepositoryImpl"
+    }
     override fun getWordInfo(word: String): Flow<Resource<List<WordInfo>>> = flow {
         emit(Resource.Loading())
 
@@ -23,6 +27,7 @@ class WordInfoRepositoryImpl(
 
         try {
             val remoteWordInfos = api.getWordInfo(word)
+            Log.d(TAG, "getWordInfo: $remoteWordInfos")
             dao.deleteWordInfos(remoteWordInfos.map { it.word })
             dao.insertWordInfos(remoteWordInfos.map { it.toWordInfoEntity() })
         } catch(e: HttpException) {

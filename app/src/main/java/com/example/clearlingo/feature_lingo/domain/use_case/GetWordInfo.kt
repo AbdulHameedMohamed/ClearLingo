@@ -1,6 +1,6 @@
 package com.example.clearlingo.feature_lingo.domain.use_case
 
-import com.example.clearlingo.feature_lingo.core.util.Resource
+import com.example.clearlingo.core.util.Resource
 import com.example.clearlingo.feature_lingo.domain.model.WordInfo
 import com.example.clearlingo.feature_lingo.domain.repository.WordInfoRepository
 import kotlinx.coroutines.flow.Flow
